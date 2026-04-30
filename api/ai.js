@@ -1,6 +1,10 @@
 export default async function handler(req, res) {
   try {
-    const { prompt } = req.body;
+    const { prompt } = req.body || {};
+
+    if (!prompt) {
+      return res.status(400).json({ result: "Prompt kosong" });
+    }
 
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
@@ -24,6 +28,8 @@ export default async function handler(req, res) {
     });
 
   } catch (err) {
-    res.status(500).json({ result: "ERROR: " + err.message });
+    res.status(500).json({
+      result: "ERROR: " + err.message
+    });
   }
 }
