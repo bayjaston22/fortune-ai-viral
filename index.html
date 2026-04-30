@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fortune AI Viral</title>
+</head>
+<body style="background:linear-gradient(135deg,#1a0025,#000);color:white;font-family:Arial;text-align:center;padding:40px">
+
+<h1>🔮 Fortune AI Viral</h1>
+<p>Cek Ramalan, Jodoh, Roasting & Khodam</p>
+
+<input id="name" placeholder="Masukkan nama kamu" style="padding:10px;width:200px"/>
+<br><br>
+
+<button onclick="ask('ramalan')">🔮 Ramalan</button>
+<button onclick="ask('jodoh')">💘 Jodoh</button>
+<button onclick="ask('roasting')">🔥 Roasting</button>
+<button onclick="ask('khodam')">👻 Khodam</button>
+
+<div id="result" style="margin-top:20px;white-space:pre-wrap"></div>
+
+<script>
+async function ask(type){
+  let name = document.getElementById("name").value;
+  if(!name) return alert("Isi nama dulu!");
+
+  let res = await fetch("/api/ai",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({prompt:`Buat ${type} lucu dan viral untuk ${name}`})
+  });
+
+  let data = await res.json();
+  document.getElementById("result").innerText = data.result;
+}
+</script>
+
+</body>
+</html>
